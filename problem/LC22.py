@@ -2,24 +2,26 @@ from typing import List
 
 
 class Solution:
-    res = []
+
     def generateParenthesis(self, n: int) -> List[str]:
 
-        self.dfs(0, 0, "",n)
-        return self.res
+        res = []
+        self.dfs(0, 0, "", n, res)
+        return res
 
-    def dfs(self,openP, closeP, s,n:int):
-        if openP == closeP and openP + closeP == n * 2:
-            self.res.append(s)
+    def dfs(self, left, right, s, n: int,res):
+
+        if left > n or right > n or right > left:
             return
 
-        if openP < n:
-            self.dfs(openP + 1, closeP, s + "(",n)
+        if left == n and right == n:
+            res.append(s)
+            return
 
-        if closeP < openP:
-            self.dfs(openP, closeP + 1, s + ")",n)
+        self.dfs(left + 1, right, s + "(", n,res)
+        self.dfs(left, right + 1, s + ")", n,res)
 
 
 if __name__ == "__main__":
     solution = Solution()
-    print(solution.generateParenthesis(3))
+    print(solution.generateParenthesis(2))
